@@ -87,7 +87,7 @@ function initializeBoards() {
         "data-index": i,
         "data-level": ext,
         draggable: false,
-        "shape-rendering": "crispEdges"
+        //"shape-rendering": "crispEdges"
       }));
     }
     
@@ -101,7 +101,7 @@ function initializeBoards() {
       fill: "transparent",
       draggable: false,
       class: "ignore-mouse",
-      "shape-rendering": "crispEdges"
+      //"shape-rendering": "crispEdges"
     }));
     
     mysvg.insertAdjacentHTML("beforeend", makeSVGTag("circle", {
