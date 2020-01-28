@@ -425,7 +425,7 @@ canvas, .cost+div{
 canvas {
   margin-top : -2px;
   width: 200px;
-  height: 140px;
+  height: 140px !important; /* main_gi: Such a hack, but the canvas kept going slightly off 140px otherwise, causing the +0 version to get offset */
 }
 .info {
   position: absolute;

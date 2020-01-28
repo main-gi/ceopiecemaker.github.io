@@ -131,7 +131,8 @@ $(".moves svg").each(function() {
 });
 //$("#moves").append("<li class=\""+className+"\">"+MOVES[i].text+"</li>\n");
 
-// $(".moves .custom").prop("contenteditable", true); //let's not :v
+//$(".moves .custom").prop("contenteditable", true); //let's not :v
+
 $("#shactive").click(function() {
   if (this.innerHTML.match(/Show/ig)) {
     $("#action").addClass("show");

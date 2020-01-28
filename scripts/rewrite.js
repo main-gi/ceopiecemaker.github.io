@@ -1,4 +1,7 @@
 var config = {};
+var lineDrawingMode = false;
+var markedTile = false;
+var curLevel = -1; // main_gi This is such a hack to implement, I wish I could do it in another way
 
 function updateSVG (level) {
   mysvg = document.getElementById("svg" + level);
@@ -114,21 +117,31 @@ function initializeBoards() {
   }
 
   // Events moved to here because reasons
+
   $(".tile").on("mousedown", function (e) {
     e.preventDefault();
-    updateSVG(this.dataset.level);
-
-    if (this.dataset.index == 112) return;
-
-    var curMove = getSpell(this.dataset.index);
-    if (curMove.dataset && curMove.dataset.id == config.id) mouse.mode = "remove";
+    updateSVG(this.dataset.level); // main_gi: Mental note to self: "level" refers to each of the 4 boards
 
     mouse.down = this.dataset.level;
+    if (this.dataset.index == 112) {
+      lineDrawingMode = true;
+      curLevel = this.dataset.level
+      return;
+    }
+
+    var curMove = getSpell(this.dataset.index);
+    if (curMove.dataset && curMove.dataset.id == config.id) mouse.mode = "remove"; // Changes functionality to erase
+
     changeSpell(this.dataset.index, this.dataset.level);
   });
 
   $(".tile").on("mouseover", function (e) {
     e.preventDefault();
+
+    if (lineDrawingMode) {
+      markedTile = this.dataset.index;
+      return
+    }
     if (mouse.down != this.dataset.level) return;
     updateSVG(this.dataset.level);
 
@@ -141,7 +154,7 @@ function initializeBoards() {
     return false;
   });
 
-  $(".tile[data-index=112]").on("dblclick", function (e) {
+  $(".tile[data-index=112]").on("dblclick", function (e) { // main_gi: Mental note to self: 112 is the center square
     e.preventDefault();
     for (var l = this.dataset.level; l < 4; l ++) {
       DATA[LEVELS[l]].move = DATA[LEVELS[l]] || "";
@@ -253,7 +266,29 @@ function getSpell(index) {
   return ret;
 }
 
+function resolveMarkedTile(i, level) { // main_gi: Does something based on the index of the marked tile, a number from 0-255.
+  if (i == false) {return} // Center = (0, 0) infinite loop, do not want
+  // main_gi: Split this to x and y where (0, 0) is the center
+  let x = (i % 15) - 7
+  let y = Math.floor(i / 15) - 7
+  // Top left is (-7, -7), bottom right is (7, 7)
+  let curX = x;
+  let curY = y;
+  // main_gi: Add (x, y) to itself, until one of them goes out of the grid.
+  while (Math.abs(curX) <= 7 && Math.abs(curY) <= 7) {
+    // main_gi: Convert the curX and curY back to the number and put it on the grid
+    updateSVG(level);
+    changeSpell((curY + 7)*15 + (curX + 7), level);
+    curX = curX + x; curY = curY + y
+    //console.log(curX)
+    //console.log(curY)
+  }
+}
+
 $(document).on("mouseup dragend", function () {
   mouse.down = -1;
   mouse.mode = "add";
+  if (lineDrawingMode) {resolveMarkedTile(markedTile, curLevel)}
+  lineDrawingMode = false;
+  markedTile = false;
 });

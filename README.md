@@ -5,7 +5,11 @@ A __Clone__ of James's __Clone__ of Aplet's __Clone__ of ACB's __V2__ of ACB's _
 
 Will not link the old PieceMakers as most of them are dead or deleted.
 
-Co-developed by Aplet123 and ACB.
+Co-developed by Aplet123 and ACB and not tony2.
+
+---
+
+Very small edits by main_gi after the fact xd
 
 ---
 Otherwise known as **PiecemakerV2V2CloneCloneClone** or **Piece Maker Clone: Ultra Pretend Limited Edition Clone But Not Ultra Pretend And Not Limited Edition Because ACB And Aplet123 Got Their Hands On It So Now It's Just Scalable Vector Graphics (PMC:UPLECBNUPANLEBACBAA1GTHOISNIJSVG)**
